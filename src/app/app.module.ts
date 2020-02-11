@@ -21,7 +21,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SwitchWithLogicComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     ReactiveFormsModule,
     NgxIpModule,
     BrowserAnimationsModule,

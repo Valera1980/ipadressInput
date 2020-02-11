@@ -1,8 +1,9 @@
 import { EnumIpType } from './../models/model-adress';
 import { Component, OnInit, ChangeDetectionStrategy,
-      Input, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+      Input, ChangeDetectorRef, Output, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Component({
@@ -25,11 +26,18 @@ export class AdressItemComponent implements OnInit {
                             (255\.(((0|128|192|224|240|248|252|254)\.0\.0)|
                             (255\.(((0|128|192|224|240|248|252|254)\.0)
                             |255\.(0|128|192|224|240|248|252|254)))))$`);
+  ib= isPlatformBrowser(this.platform);
   constructor(
-    private _cd: ChangeDetectorRef
-  ) { }
+    private _cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platform: Object
+  ) { 
+    
+  }
   ngOnInit(): void {
-    this.form.controls.subnetMask.setValidators(this.maskValidator.bind(this));
+    if (isPlatformBrowser(this.platform)) {
+      //Initialise your charets here
+      this.form.controls.subnetMask.setValidators(this.maskValidator.bind(this));
+    }
   }
   selectType(v: EnumIpType): void {
     this.selectedIpType = v;
