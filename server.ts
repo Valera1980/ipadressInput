@@ -10,16 +10,7 @@ import { existsSync } from 'fs';
 const fs = require('fs');
 const domino = require('domino');
 
-
-
-// The Express app is exported so that it can be used by serverless Functions.
-export function app() {
-  const server = express();
-  const distFolder = join(process.cwd(), 'dist/iptest/browser');
-  const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
-
-
-  const templateA = fs.readFileSync(join(distFolder, 'index.html')).toString();
+const templateA = join('browser', 'index.html');
 const win = domino.createWindow(templateA);
 win.Object = Object;
 win.Math = Math;
@@ -38,6 +29,15 @@ global['getComputedStyle'] = () => {
     }
   };
 };
+
+
+
+// The Express app is exported so that it can be used by serverless Functions.
+export function app() {
+  const server = express();
+  const distFolder = join(process.cwd(), 'dist/iptest/browser');
+  const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
+
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
