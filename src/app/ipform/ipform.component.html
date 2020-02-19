@@ -1,7 +1,7 @@
 <p>adresses</p>
 
 <button (click)="addAdress()">add ip</button>
-<div [formGroup]="mainForm">
+<div [formGroup]="mainForm" *ngIf="ib">
     <div formArrayName="adresses" *ngFor="let adr of adresses.controls; let i = index;">
         <div [formGroupName]="i">
             <app-adress-item  [form]="adr" (eventRemove)="remove(i)"></app-adress-item>

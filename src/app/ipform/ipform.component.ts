@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { ModelAdress, EnumIpType } from './../models/model-adress';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, PLATFORM_ID, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { UUID } from 'angular2-uuid';
 
@@ -11,10 +12,12 @@ import { UUID } from 'angular2-uuid';
 })
 export class IpformComponent implements OnInit {
 
+  ib = isPlatformBrowser(this.platform);
   mainForm: FormGroup;
   constructor(
     private _fb: FormBuilder,
-    private _cd: ChangeDetectorRef
+    private _cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platform: Object
   ) { }
 
   ngOnInit(): void {

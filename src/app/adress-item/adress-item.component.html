@@ -10,28 +10,35 @@
             <span class="adress-item__switch-label">{{selectedIpType}}</span>
         </div>
         <!-- <button (click)="remove()">remove</button> -->
-        <fa-icon class="adress-item__remove-icon" [icon]="faTrash"></fa-icon>
+        <ng-container *ngIf="ib">
+
+            <fa-icon class="adress-item__remove-icon" [icon]="faTrash"></fa-icon>
+        </ng-container>
 
 
     </div>
-    <div class="adress-item__ip-input">
-        <ngx-ip 
-            formControlName="adress" 
-            [mode]="selectedIpType" 
-            [copyMode]="'adress'">
-        </ngx-ip>
-        <span class="adress-item__error" *ngIf="isIpInvalid()">ip adress is invalid</span>
+    <ng-container *ngIf="ib">
+        <div class="adress-item__ip-input">
+            <ngx-ip
+                formControlName="adress"
+                [mode]="selectedIpType"
+                [copyMode]="'adress'">
+            </ngx-ip>
+            <span class="adress-item__error" *ngIf="isIpInvalid()">ip adress is invalid</span>
+        </div>
+    </ng-container>
 
-    </div>
-
-    <div  class="adress-item__ip-input">
-        <ngx-ip *ngIf="selectedIpType===enumIp.IPv4" 
-           formControlName="subnetMask" 
-           [mode]="enumIp.IPv4" 
-           [copyMode]="'block'">
-        </ngx-ip>
-        <span class="adress-item__error" *ngIf="isMaskInValid()">subnet mask is invalid</span>
-    </div>
+    <ng-container *ngIf="ib">
+        <div  class="adress-item__ip-input">
+            <ngx-ip *ngIf="selectedIpType===enumIp.IPv4" 
+               formControlName="subnetMask" 
+               [mode]="enumIp.IPv4" 
+               [copyMode]="'block'">
+            </ngx-ip>
+            <span class="adress-item__error" *ngIf="isMaskInValid()">subnet mask is invalid</span>
+        </div>
+    
+    </ng-container>
    
     <input formControlName="comment" type="text">
 
