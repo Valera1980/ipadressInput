@@ -53,10 +53,12 @@ const arrTest = [
 export class AppComponent {
   title = 'iptest';
   testGroup() {
-     const res = this.groupBy(arrTest, 'code');
-     console.log(res);
-     const res2 = this.groupBy(res.get('build_teh'), 'codeIndex');
-     console.log(res2);
+    //  const res = this.groupBy(arrTest, 'code');
+    //  console.log(res);
+    //  const res2 = this.groupBy(res.get('build_teh'), 'codeIndex');
+    //  console.log(res2);
+    const res = this.doubleGroupBy(arrTest, 'code');
+    console.log(res);
   }
 
   groupBy(arrForGroup: any[], fieldName: string): Map<string, any[]> {
@@ -71,6 +73,16 @@ export class AppComponent {
       arr.push(res);
     }
     return mapGroup;
+  }
+  doubleGroupBy(arrForGroup: any[], fieldName: string): Array<any[]> {
+    const firstGroup = this.groupBy(arrForGroup, fieldName);
+    // console.log(firstGroup);
+    const transformed = this.groupBy(firstGroup.get('build_teh'), 'codeIndex');
+    const result = [];
+    for(const key of transformed.keys()) {
+       result.push(transformed.get(key));
+    }
+    return result;
   }
 
 }
