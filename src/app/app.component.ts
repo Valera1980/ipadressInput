@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { UsersService, User } from './services/users/users.service';
+import { Component, OnInit } from '@angular/core';
+import { map, catchError } from 'rxjs/operators';
 
 const arrTest = [
   {
@@ -50,8 +53,21 @@ const arrTest = [
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   title = 'iptest';
+
+  userName$;
+  constructor(
+    private _us: UsersService
+  ) { }
+
+  ngOnInit(): void {
+    this._us.queryUsers()
+      .subscribe();
+    this.userName$ = this._us.users;
+  }
+
   testGroup() {
     //  const res = this.groupBy(arrTest, 'code');
     //  console.log(res);
@@ -59,6 +75,27 @@ export class AppComponent {
     //  console.log(res2);
     const res = this.doubleGroupBy(arrTest, 'code');
     console.log(res);
+  }
+
+  getName(name: string): Observable<string> {
+    console.log('67867867')
+    return this.userName$
+      .pipe(
+        map((users: User[]) => {
+          throw '908098098';
+          
+          const user = users.find(u => u.name === name);
+          if (user) {
+            return user.name;
+          }
+          
+          return '';
+        }),
+        catchError(e => {
+          console.error('error with resources ' + name);
+          return of('');
+        })
+      )
   }
 
   groupBy(arrForGroup: any[], fieldName: string): Map<string, any[]> {
@@ -79,8 +116,8 @@ export class AppComponent {
     // console.log(firstGroup);
     const transformed = this.groupBy(firstGroup.get('build_teh'), 'codeIndex');
     const result = [];
-    for(const key of transformed.keys()) {
-       result.push(transformed.get(key));
+    for (const key of transformed.keys()) {
+      result.push(transformed.get(key));
     }
     return result;
   }
