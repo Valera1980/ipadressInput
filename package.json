@@ -30,7 +30,7 @@
     "@nguniversal/express-engine": "^9.0.1",
     "angular2-uuid": "^1.1.1",
     "domino": "^2.1.4",
-    "express": "^4.15.2",
+    "express": "^4.17.3",
     "ngx-ip": "^1.1.4",
     "rxjs": "~6.5.4",
     "tslib": "^1.11.0",
